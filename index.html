@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Mobage Event Timer</title>
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+	<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+	<!-- Normalize.css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- jQuery.countdown -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
+
+	<!-- MomentJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data-2012-2022.min.js"></script>
+
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="#">Mobage Event</a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+			  <a class="nav-link" aria-current="page" href="#ak">Arknights</a>
+			  <a class="nav-link" href="#pnc">Neural Cloud</a>
+			  <a class="nav-link" href="#gfl">Girls' Frontline</a>
+			  <a class="nav-link" href="#tkrb">Touken Ranbu</a>
+		      <a class="nav-link" href="#sn">Shining Nikki</a>
+			</div>
+		  </div>
+		</div>
+	  </nav>
+
+<div class="container-fluid">
+	<h1>Mobage Event Timer</h1>
+
+	<div class="container">
+
+	<div class="row">
+
+	<div class="col-sm-6">
+	<h2 id="ak">Arknights</h2>
+	<small>UTC-07:00</small>
+	<div class="card bg-dark border-0 rounded-0 p-1">
+		<div class="card border-0 rounded-0" style="height:150px; background-size:cover; background-position:center; background-image:url('https://webusstatic.yo-star.com/uy0news/ae/619bcae024e9bc37062fb6dc702a930e.png');">
+		<p class="d-flex border-0 rounded-0 h-100 justify-content-center align-items-end flex-wrap" style="font-size:large; color:white; text-shadow:1px 1px 5px #000;">Lingering Echoes</p>
+		</div>
+	</div>
+
+	<div class="countdown-clock">
+		<div class="countdown-container"
+			data-countdown="2023-01-10 03:59:00"
+			data-countdown-start="2022-12-27 10:00:00"
+			data-countdown-end="2023-01-10 03:59:00"
+			data-countdown-timezone="Canada/Yukon">
+		</div>
+	</div>
+	<script>
+
+		// ID of the element to add the Countdown Clock to
+		var $clockElement = $('[data-countdown]');
+	
+		$clockElement.each( function() {
+	
+			// Read data from HTML attributes to store in vars
+			var $clock = $(this),
+				eventDisplay = $(this).data('countdown')
+				// Event STARTING time
+				eventStart = $(this).data('countdownStart'),
+				// Event ENDING time
+				eventEnd = $(this).data('countdownEnd'),
+				// Event TIMEZONE
+				eventTimeZone = $(this).data('countdownTimezone');
+	
+			// CONVERT eventEnd to MOMENT.JS FORMAT to compare with current time later on.
+			var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+	
+			// Time to COUNTDOWN TO
+			var countdownTo = moment.tz(eventDisplay, eventTimeZone);
+	
+			$clock.countdown(countdownTo.toDate(), { elapse: true } ).on('update.countdown', function(event) {
+				// Clock Countdown HTML Ouptut
+				var output = '<div class="time seconds"><span class="count">%S</span> <span class="label">sec%!S</span></div>';
+				// Add number of MINUTES left
+				if ( event.offset.totalMinutes > 0 ) {
+					output = '<div class="time minutes"><span class="count">%M</span> <span class="label">min%!M</span></div>' + output;
+				}
+				// Add number of HOURS left
+				if ( event.offset.totalHours > 0 ) {
+					output = '<div class="time hours"><span class="count">%H</span> <span class="label">hr%!H</span></div>' + output;
+				}
+				// Add number of DAYS left
+				if ( event.offset.totalDays > 0 ) {
+					output = '<div class="time days"><span class="count">%-D</span> <span class="label">day%!D</span></div>' + output;
+				}
+	
+				// Get CURRENT TIME in the event's timezone
+				var currentTime = moment().tz(eventTimeZone);
+	
+				// If CURRENT TIME is GREATER THAN event ENDING TIME, display...
+				if ( currentTime > eventEndTime && event.elapsed ) {
+					$(this).html(''
+						+ '<p>EVENT HAS ENDED.</p>'
+					).parent().addClass('disabled');
+					// Stop the Countdown
+					$(this).countdown('stop');
+				// Display COUNTDOWN to event...
+				} else {
+					$(this).html( event.strftime(output) );
+				}
+	
+			});
+	
+		});
+	
+	</script>
+	</div>
+
+	<div class="col-sm-6">
+	<h2 id="pnc">Neural Cloud</h2>
+	<small>UTC-08:00</small>
+	<div class="card bg-dark border-0 rounded-0 p-1">
+		<div class="card border-0 rounded-0" style="height:150px; background-size:cover; background-position:top; background-image:url('https://pbs.twimg.com/media/FkXolvBVEAEz-g0?format=jpg&name=large');">
+		<p class="d-flex border-0 rounded-0 h-100 justify-content-center align-items-end flex-wrap" style="font-size:large; color:white; text-shadow:1px 1px 5px #000;">Divine Heresy</p>
+		</div>
+	</div>
+
+	<div class="countdown-clock">
+		<div class="countdown-container"
+			data-countdown="2022-12-28 01:00:00"
+			data-countdown-start="2022-12-28 01:00"
+			data-countdown-end="2023-01-24 23:59"
+			data-countdown-timezone="America/Los_Angeles">
+		</div>
+	</div>
+
+	<script>
+
+		// ID of the element to add the Countdown Clock to
+		var $clockElement = $('[data-countdown]');
+	
+		$clockElement.each( function() {
+	
+			// Read data from HTML attributes to store in vars
+			var $clock = $(this),
+				eventDisplay = $(this).data('countdown')
+				// Event STARTING time
+				eventStart = $(this).data('countdownStart'),
+				// Event ENDING time
+				eventEnd = $(this).data('countdownEnd'),
+				// Event TIMEZONE
+				eventTimeZone = $(this).data('countdownTimezone');
+	
+			// CONVERT eventEnd to MOMENT.JS FORMAT to compare with current time later on.
+			var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+	
+			// Time to COUNTDOWN TO
+			var countdownTo = moment.tz(eventDisplay, eventTimeZone);
+	
+			$clock.countdown(countdownTo.toDate(), { elapse: true } ).on('update.countdown', function(event) {
+				// Clock Countdown HTML Ouptut
+				var output = '<div class="time seconds"><span class="count">%S</span> <span class="label">sec%!S</span></div>';
+				// Add number of MINUTES left
+				if ( event.offset.totalMinutes > 0 ) {
+					output = '<div class="time minutes"><span class="count">%M</span> <span class="label">min%!M</span></div>' + output;
+				}
+				// Add number of HOURS left
+				if ( event.offset.totalHours > 0 ) {
+					output = '<div class="time hours"><span class="count">%H</span> <span class="label">hr%!H</span></div>' + output;
+				}
+				// Add number of DAYS left
+				if ( event.offset.totalDays > 0 ) {
+					output = '<div class="time days"><span class="count">%-D</span> <span class="label">day%!D</span></div>' + output;
+				}
+	
+				// Get CURRENT TIME in the event's timezone
+				var currentTime = moment().tz(eventTimeZone);
+	
+				// If CURRENT TIME is GREATER THAN event ENDING TIME, display...
+				if ( currentTime > eventEndTime && event.elapsed ) {
+					$(this).html(''
+						+ '<p>EVENT HAS ENDED.</p>'
+					).parent().addClass('disabled');
+					// Stop the Countdown
+					$(this).countdown('stop');
+				// Display COUNTDOWN to event...
+				} else {
+					$(this).html( event.strftime(output) );
+				}
+	
+			});
+	
+		});
+	
+	</script>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="col-sm-6">
+	<h2 id="gfl">Girls' Frontline</h2>
+	<small>UTC-08:00</small>
+	<div class="card bg-dark border-0 rounded-0 p-1">
+		<div class="card border-0 rounded-0" style="height:150px; background-size:cover; background-position:center; background-image:url('https://gamepress.gg/girlsfrontline/sites/girlsfrontline/files/styles/banner_image/public/2022-01/Xmas2021Guide.png?itok=mqJ_4f11');">
+		<p class="d-flex border-0 rounded-0 h-100 justify-content-center align-items-end flex-wrap" style="font-size:large; color:white; text-shadow:1px 1px 5px #000;">One Coin short</p>
+		</div>
+	</div>
+
+	<div class="countdown-clock">
+		<div class="countdown-container"
+		data-countdown="2023-01-09 23:59"
+		data-countdown-start="2022-12-20"
+		data-countdown-end="2023-01-09 23:59"
+		data-countdown-timezone="America/Los_Angeles">
+		</div>
+	</div>
+	<script>
+
+		// ID of the element to add the Countdown Clock to
+		var $clockElement = $('[data-countdown]');
+	
+		$clockElement.each( function() {
+	
+			// Read data from HTML attributes to store in vars
+			var $clock = $(this),
+				eventDisplay = $(this).data('countdown')
+				// Event STARTING time
+				eventStart = $(this).data('countdownStart'),
+				// Event ENDING time
+				eventEnd = $(this).data('countdownEnd'),
+				// Event TIMEZONE
+				eventTimeZone = $(this).data('countdownTimezone');
+	
+			// CONVERT eventEnd to MOMENT.JS FORMAT to compare with current time later on.
+			var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+	
+			// Time to COUNTDOWN TO
+			var countdownTo = moment.tz(eventDisplay, eventTimeZone);
+	
+			$clock.countdown(countdownTo.toDate(), { elapse: true } ).on('update.countdown', function(event) {
+				// Clock Countdown HTML Ouptut
+				var output = '<div class="time seconds"><span class="count">%S</span> <span class="label">sec%!S</span></div>';
+				// Add number of MINUTES left
+				if ( event.offset.totalMinutes > 0 ) {
+					output = '<div class="time minutes"><span class="count">%M</span> <span class="label">min%!M</span></div>' + output;
+				}
+				// Add number of HOURS left
+				if ( event.offset.totalHours > 0 ) {
+					output = '<div class="time hours"><span class="count">%H</span> <span class="label">hr%!H</span></div>' + output;
+				}
+				// Add number of DAYS left
+				if ( event.offset.totalDays > 0 ) {
+					output = '<div class="time days"><span class="count">%-D</span> <span class="label">day%!D</span></div>' + output;
+				}
+	
+				// Get CURRENT TIME in the event's timezone
+				var currentTime = moment().tz(eventTimeZone);
+	
+				// If CURRENT TIME is GREATER THAN event ENDING TIME, display...
+				if ( currentTime > eventEndTime && event.elapsed ) {
+					$(this).html(''
+						+ '<p>EVENT HAS ENDED.</p>'
+					).parent().addClass('disabled');
+					// Stop the Countdown
+					$(this).countdown('stop');
+				// Display COUNTDOWN to event...
+				} else {
+					$(this).html( event.strftime(output) );
+				}
+	
+			});
+	
+		});
+	
+	</script>
+	</div>
+
+	<div class="col-sm-6">
+	<h2 id="tkrb">Touken Ranbu</h2>
+	<small>UTC-08:00</small>
+	<div class="card bg-dark border-0 rounded-0 p-1">
+		<div class="card border-0 rounded-0" style="height:150px; background-size:cover; background-position:top; background-image:url('https://pbs.twimg.com/media/Fj1j0MhXoAMcB9d?format=jpg&name=900x900');">
+		<p class="d-flex border-0 rounded-0 h-100 justify-content-center align-items-end flex-wrap" style="font-size:large; color:white; text-shadow:1px 1px 5px #000;">Winter Regiment</p>
+		</div>
+	</div>
+
+	<div class="countdown-clock">
+		<div class="countdown-container"
+			data-countdown="2023-01-09 07:59"
+			data-countdown-start="2022-12-12"
+			data-countdown-end="2023-01-09 07:59"
+			data-countdown-timezone="America/Los_Angeles">
+		</div>
+	</div>
+
+	<script>
+
+		// ID of the element to add the Countdown Clock to
+		var $clockElement = $('[data-countdown]');
+	
+		$clockElement.each( function() {
+	
+			// Read data from HTML attributes to store in vars
+			var $clock = $(this),
+				eventDisplay = $(this).data('countdown')
+				// Event STARTING time
+				eventStart = $(this).data('countdownStart'),
+				// Event ENDING time
+				eventEnd = $(this).data('countdownEnd'),
+				// Event TIMEZONE
+				eventTimeZone = $(this).data('countdownTimezone');
+	
+			// CONVERT eventEnd to MOMENT.JS FORMAT to compare with current time later on.
+			var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+	
+			// Time to COUNTDOWN TO
+			var countdownTo = moment.tz(eventDisplay, eventTimeZone);
+	
+			$clock.countdown(countdownTo.toDate(), { elapse: true } ).on('update.countdown', function(event) {
+				// Clock Countdown HTML Ouptut
+				var output = '<div class="time seconds"><span class="count">%S</span> <span class="label">sec%!S</span></div>';
+				// Add number of MINUTES left
+				if ( event.offset.totalMinutes > 0 ) {
+					output = '<div class="time minutes"><span class="count">%M</span> <span class="label">min%!M</span></div>' + output;
+				}
+				// Add number of HOURS left
+				if ( event.offset.totalHours > 0 ) {
+					output = '<div class="time hours"><span class="count">%H</span> <span class="label">hr%!H</span></div>' + output;
+				}
+				// Add number of DAYS left
+				if ( event.offset.totalDays > 0 ) {
+					output = '<div class="time days"><span class="count">%-D</span> <span class="label">day%!D</span></div>' + output;
+				}
+	
+				// Get CURRENT TIME in the event's timezone
+				var currentTime = moment().tz(eventTimeZone);
+	
+				// If CURRENT TIME is GREATER THAN event ENDING TIME, display...
+				if ( currentTime > eventEndTime && event.elapsed ) {
+					$(this).html(''
+						+ '<p>EVENT HAS ENDED.</p>'
+					).parent().addClass('disabled');
+					// Stop the Countdown
+					$(this).countdown('stop');
+				// Display COUNTDOWN to event...
+				} else {
+					$(this).html( event.strftime(output) );
+				}
+	
+			});
+	
+		});
+	
+	</script>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+
+<h2 id="sn">Shining Nikki</h2>
+	<small>UTC-07:00</small>
+	<div class="card bg-dark border-0 rounded-0 p-1">
+		<div class="card border-0 rounded-0" style="height:150px; background-size:cover; background-position:; background-image:url('https://cdn.discordapp.com/attachments/813704942132133930/1055353419445055568/321539958_1773148619732179_7174299783868392835_n.jpg');">
+		<p class="d-flex border-0 rounded-0 h-100 justify-content-center align-items-end flex-wrap" style="font-size:large; color:white; text-shadow:1px 1px 5px #000;">Queen's Starsnow Ball</p>
+		</div>
+	</div>
+
+	<div class="countdown-clock">
+		<div class="countdown-container"
+			data-countdown="2023-01-01 23:59"
+			data-countdown-start="2022-12-22 05:00"
+			data-countdown-end="2023-01-01 23:59"
+			data-countdown-timezone="Canada/Yukon">
+		</div>
+	</div>
+
+	<script>
+
+		// ID of the element to add the Countdown Clock to
+		var $clockElement = $('[data-countdown]');
+	
+		$clockElement.each( function() {
+	
+			// Read data from HTML attributes to store in vars
+			var $clock = $(this),
+				eventDisplay = $(this).data('countdown')
+				// Event STARTING time
+				eventStart = $(this).data('countdownStart'),
+				// Event ENDING time
+				eventEnd = $(this).data('countdownEnd'),
+				// Event TIMEZONE
+				eventTimeZone = $(this).data('countdownTimezone');
+	
+			// CONVERT eventEnd to MOMENT.JS FORMAT to compare with current time later on.
+			var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+	
+			// Time to COUNTDOWN TO
+			var countdownTo = moment.tz(eventDisplay, eventTimeZone);
+	
+			$clock.countdown(countdownTo.toDate(), { elapse: true } ).on('update.countdown', function(event) {
+				// Clock Countdown HTML Ouptut
+				var output = '<div class="time seconds"><span class="count">%S</span> <span class="label">sec%!S</span></div>';
+				// Add number of MINUTES left
+				if ( event.offset.totalMinutes > 0 ) {
+					output = '<div class="time minutes"><span class="count">%M</span> <span class="label">min%!M</span></div>' + output;
+				}
+				// Add number of HOURS left
+				if ( event.offset.totalHours > 0 ) {
+					output = '<div class="time hours"><span class="count">%H</span> <span class="label">hr%!H</span></div>' + output;
+				}
+				// Add number of DAYS left
+				if ( event.offset.totalDays > 0 ) {
+					output = '<div class="time days"><span class="count">%-D</span> <span class="label">day%!D</span></div>' + output;
+				}
+	
+				// Get CURRENT TIME in the event's timezone
+				var currentTime = moment().tz(eventTimeZone);
+	
+				// If CURRENT TIME is GREATER THAN event ENDING TIME, display...
+				if ( currentTime > eventEndTime && event.elapsed ) {
+					$(this).html(''
+						+ '<p>EVENT HAS ENDED.</p>'
+					).parent().addClass('disabled');
+					// Stop the Countdown
+					$(this).countdown('stop');
+				// Display COUNTDOWN to event...
+				} else {
+					$(this).html( event.strftime(output) );
+				}
+	
+			});
+	
+		});
+	
+	</script>
+	</div>
+
+</div>
+
+</div>
+
+<hr style="background-color:white;">
+<footer class="m-0">
+	<p>Base by <a href="https://gist.github.com/lopadz/43ae80d5f8af72b4232233eaccb9df8e">Lopadz</a><br>
+	© <a href="https://github.com/Clover-Zero">Clover Zero</a></p>
+</footer>
+
+</body>
+</html>
