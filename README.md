@@ -1,7 +1,8 @@
 # Mobage Event Timer
 
 Event timer/countdown for mobile games I'm playing.
-Currently, it's: Arknights, Neural Cloud, Girls' Frontline, Touken Ranbu, Shining Nikki.
+
+Current mobages: Arknights, Neural Cloud, Girls' Frontline, Touken Ranbu, Shining Nikki.
 
 ## To-do
 - [x] Make the navigation bar better.
