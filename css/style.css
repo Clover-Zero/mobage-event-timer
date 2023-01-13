@@ -68,10 +68,10 @@ a:hover {
 }
 
 .countdown-clock .time {
-  background-color: #222;
+  background-color: #222; /* #222 */
   border-radius: 0;
   display: table-cell;
-  min-width: 50px;
+  min-width: 20px;
   padding: 1em .5em;
   position: relative;
   text-align: center;
