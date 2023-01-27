@@ -62,17 +62,17 @@ a:hover {
   border-spacing: .5em;
   border-collapse: separate;
   display: table;
-  margin: .5em auto;
+  margin: .5em auto; /* .5em auto */
   max-width: 500px;
   width: 100%;
 }
 
 .countdown-clock .time {
-  background-color: #222; /* #222 */
+  background-color: #222;
   border-radius: 0;
   display: table-cell;
   min-width: 20px;
-  padding: 1em .5em;
+  padding: 1em .5em; /* 1em .5em */
   position: relative;
   text-align: center;
 }
