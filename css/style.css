@@ -84,6 +84,12 @@ a:hover {
   color: black;
 }*/
 
+/* Event cards */
+
+.event {
+  height: 150px;
+}
+
 /* Countdown Clock Styles */
 .countdown-clock .countdown-container {
   border-spacing: .5em;
@@ -138,6 +144,13 @@ a:hover {
   }
   .countdown-clock .label {
     font-size: 15px;
+  }
+  
+}
+
+@media screen and (max-width: 768px) {
+  .event {
+    height: 100px;
   }
 }
 
