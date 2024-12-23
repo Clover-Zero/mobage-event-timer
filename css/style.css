@@ -91,6 +91,7 @@ a:hover {
   background-color: rgb(109, 107, 138);
   display: flex;
   max-height: 50px;
+  width: 100%;
   justify-content: space-between;
   overflow: hidden;
   padding: 10px;
