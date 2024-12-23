@@ -53,6 +53,14 @@ html {
      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
    }
   
+   h1 {
+    font-size: 1.5em;
+   }
+  
+   h2 {
+    font-size: 1.3em
+   }
+  
   /* The navigation bar */
   /*.navbar {
     overflow: hidden;
@@ -75,6 +83,12 @@ html {
     background: #ddd;
     color: black;
   }*/
+  
+  /* Event cards */
+  
+  .event {
+    height: 150px;
+  }
   
   /* Countdown Clock Styles */
   .countdown-clock .countdown-container {
@@ -130,6 +144,13 @@ html {
     }
     .countdown-clock .label {
       font-size: 15px;
+    }
+    
+  }
+  
+  @media screen and (max-width: 768px) {
+    .event {
+      height: 100px;
     }
   }
   

@@ -87,7 +87,30 @@ a:hover {
 /* Event cards */
 
 .event {
-  height: 150px;
+  align-items: center;
+  background-color: rgb(109, 107, 138);
+  display: flex;
+  max-height: 50px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  margin: 10px;
+}
+
+.name {
+  z-index: 5;
+  text-align: left;
+}
+
+.countdown {
+  align-items: center;
+  display: flex;
+  position: absolute;
+  right: 30px;
+  z-index: 20;
+  padding: 5px;
+  background-color: rgba(2, 2, 2, 0.445);
 }
 
 /* Countdown Clock Styles */
