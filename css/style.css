@@ -92,10 +92,10 @@ a:hover {
   display: flex;
   max-height: 50px;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-between;*/
   overflow: hidden;
-  padding: 10px;
   position: relative;
+  padding: 10px;
   margin: 10px;
 }
 
