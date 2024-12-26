@@ -34,25 +34,6 @@ a:hover {
   color: rgba(255, 255, 255, 0.733);
 }
 
-.outline {
-  font-size: large;
-  color: #fff;
-  text-shadow: 2px 2px 5px #000, 0 0 25px #000;
-}
-
-.box {
-  color: #fff;
-  background-color:rgba(0, 0, 0, 0.534);
-}
-
-.carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
- }
- 
- .carousel-control-next-icon {
-   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
- }
-
  h1 {
   font-size: 1.5em;
  }
@@ -90,7 +71,7 @@ a:hover {
   align-items: center;
   background-color: rgb(109, 107, 138);
   display: flex;
-  max-height: 50px;
+  height: 55px;
   width: 100%;
   justify-content: space-between;*/
   overflow: hidden;
