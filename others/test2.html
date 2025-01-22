@@ -32,7 +32,7 @@
 
 	<!-- MomentJS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.46/moment-timezone.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.46/moment-timezone-with-data.min.js"></script>
 
 </head>
 <body>
@@ -57,7 +57,7 @@
                                 data-countdown
                                 data-countdown-start="2020-01-01 12:00:00"
                                 data-countdown-end="2025-02-05 18:59:00"
-                                data-countdown-timezone="Caracas/Venezuela"></div>
+                                data-countdown-timezone="America/Caracas"></div>
                         </div>
                     </div>      
 
@@ -76,7 +76,7 @@
                                 data-countdown
                                 data-countdown-start="2020-01-01 12:00:00"
                                 data-countdown-end="2025-02-12 09:29:00"
-                                data-countdown-timezone="America/Los Angeles"></div>
+                                data-countdown-timezone="America/Los_Angeles"></div>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
                                 data-countdown
                                 data-countdown-start="2020-01-01 12:00:00"
                                 data-countdown-end="2025-01-13 23:59:00"
-                                data-countdown-timezone="America/Los Angeles"></div>
+                                data-countdown-timezone="America/Los_Angeles"></div>
                         </div>
                     </div>
 
@@ -177,56 +177,45 @@
             This cursed site © <a href="https://github.com/Clover-Zero">Clover Zero</a></p>
     </footer>
 
-
     <script>
         var $clockElement = $('[data-countdown]');
     
         $clockElement.each(function () {
-    
             var $clock = $(this),
-                // Event STARTING time
                 eventStart = $(this).data('countdownStart'),
-                // Event ENDING time
                 eventEnd = $(this).data('countdownEnd'),
-                // Event TIMEZONE
                 eventTimeZone = $(this).data('countdownTimezone');
     
-            // Convert start and end times to Moment.js objects in the correct timezone
+            // Parse start and end times with the specified timezone
             var eventStartTime = moment.tz(eventStart, eventTimeZone);
             var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+    
+            // Debug: Log parsed times
+            console.log("Event Start Time:", eventStartTime.format());
+            console.log("Event End Time:", eventEndTime.format());
+            console.log("Available Timezones:", moment.tz.names());
     
             // Set initial countdown target
             var countdownTo = eventStartTime;
     
-            // Initialize the countdown
             $clock.countdown(countdownTo.toDate(), { elapse: true }).on('update.countdown', function (event) {
-                // Create the single-line output (without seconds)
-                var output = event.strftime(
-                    '%-Dd %Hh %Mm'
-                );
-    
-                // Get current time in the event's timezone
                 var currentTime = moment().tz(eventTimeZone);
+                var output = event.strftime('%-Dd %Hh %Mm');
     
-                // Check if event has ended
                 if (currentTime.isAfter(eventEndTime)) {
                     $(this).html('<span>Ended</span>');
                     $(this).countdown('stop');
-                } 
-                // Check if the event is in progress
-                else if (currentTime.isAfter(eventStartTime)) {
+                } else if (currentTime.isAfter(eventStartTime)) {
                     countdownTo = eventEndTime;
                     $(this).countdown(countdownTo.toDate());
                     $(this).html('<span>' + output + '</span>');
-                } 
-                // Countdown to the event start
-                else {
+                } else {
                     $(this).html('<span>' + output + '</span>');
                 }
             });
-    
         });
     </script>
+    
     
     
 
