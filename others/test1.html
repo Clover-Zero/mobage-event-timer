@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Event Countdown Clock with Timezone Awareness</title>
+
+	<!-- Normalize.css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+	<!-- Countdown Clock Styles -->
+	<link rel="stylesheet" href="styles.css">
+
+	<!-- jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- jQuery.countdown -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
+
+	<!-- MomentJS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.46/moment-timezone.min.js"></script>
+
+</head>
+<body>
+
+	<h1>Event Countdown Clock</h1>
+	<div class="countdown-clock">
+		<div class="countdown-container"
+			data-countdown
+			data-countdown-start="2020-01-01 12:00:00"
+			data-countdown-end="2025-02-20 12:00:00"
+			data-countdown-timezone="America/Chicago"></div>
+	</div>
+
+    <div class="countdown-clock">
+		<div class="countdown-container"
+			data-countdown
+			data-countdown-start="2020-01-01 12:00:00"
+			data-countdown-end="2025-01-01 12:00:00"
+			data-countdown-timezone="America/Chicago"></div>
+	</div>
+
+
+<script>
+    var $clockElement = $('[data-countdown]');
+
+    $clockElement.each(function () {
+
+        var $clock = $(this),
+            // Event STARTING time
+            eventStart = $(this).data('countdownStart'),
+            // Event ENDING time
+            eventEnd = $(this).data('countdownEnd'),
+            // Event TIMEZONE
+            eventTimeZone = $(this).data('countdownTimezone');
+
+        // Convert start and end times to Moment.js objects in the correct timezone
+        var eventStartTime = moment.tz(eventStart, eventTimeZone);
+        var eventEndTime = moment.tz(eventEnd, eventTimeZone);
+
+        // Set initial countdown target
+        var countdownTo = eventStartTime;
+
+        // Initialize the countdown
+        $clock.countdown(countdownTo.toDate(), { elapse: true }).on('update.countdown', function (event) {
+            var output = '<div class="time seconds"><span class="count">%S</span> <span class="label">sec%!S</span></div>';
+
+            // Add number of MINUTES left
+            if (event.offset.totalMinutes > 0) {
+                output = '<div class="time minutes"><span class="count">%M</span> <span class="label">min%!M</span></div>' + output;
+            }
+
+            // Add number of HOURS left
+            if (event.offset.totalHours > 0) {
+                output = '<div class="time hours"><span class="count">%H</span> <span class="label">hr%!H</span></div>' + output;
+            }
+
+            // Add number of DAYS left
+            if (event.offset.totalDays > 0) {
+                output = '<div class="time days"><span class="count">%-D</span> <span class="label">day%!D</span></div>' + output;
+            }
+
+            // Get current time in the event's timezone
+            var currentTime = moment().tz(eventTimeZone);
+
+            // Check if event has ended
+            if (currentTime.isAfter(eventEndTime)) {
+                $(this).html('<p>Ended</p>');
+                $(this).countdown('stop');
+            } 
+            // Check if the event is in progress
+            else if (currentTime.isAfter(eventStartTime)) {
+                countdownTo = eventEndTime;
+                $(this).countdown(countdownTo.toDate());
+                $(this).html(event.strftime('<p></p>' + output));
+            } 
+            // Countdown to the event start
+            else {
+                $(this).html(event.strftime('<p>Starts in:</p>' + output));
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
