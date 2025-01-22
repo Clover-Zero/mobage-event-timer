@@ -75,7 +75,7 @@
                             <div class="countdown-container"
                                 data-countdown
                                 data-countdown-start="2020-01-01 12:00:00"
-                                data-countdown-end="2025-02-12 09:29:00"
+                                data-countdown-end="2025-02-11 18:29:00"
                                 data-countdown-timezone="America/Los_Angeles"></div>
                         </div>
                     </div>
@@ -191,9 +191,9 @@
             var eventEndTime = moment.tz(eventEnd, eventTimeZone);
     
             // Debug: Log parsed times
-            console.log("Event Start Time:", eventStartTime.format());
-            console.log("Event End Time:", eventEndTime.format());
-            console.log("Available Timezones:", moment.tz.names());
+            // console.log("Event Start Time:", eventStartTime.format());
+            // console.log("Event End Time:", eventEndTime.format());
+            // console.log("Available Timezones:", moment.tz.names());
     
             // Set initial countdown target
             var countdownTo = eventStartTime;
